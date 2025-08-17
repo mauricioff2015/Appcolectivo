@@ -1,27 +1,17 @@
 version: "3.8"
 services:
   colectivo:
-  # IMPORTANT: Use a prebuilt image (built by CI). Do NOT add a 'build:' section in Portainer.
-  # Define IMAGE in the stack env (e.g., ghcr.io/<owner>/colectivo-web:latest)
-    image: ${IMAGE:-ghcr.io/owner/colectivo-web:latest}
+    # Use a prebuilt image from registry; no build here.
+    image: ${IMAGE:-ghcr.io/mauricioff2015/colectivo-web:latest}
     container_name: colectivo-web
     ports:
       - "8080:8080"
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-  # FYI: API_BASE_URL is compile-time in Flutter Web and is baked into the image by CI.
-  # Changing this variable here will NOT change the app's API target.
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
-    networks:
-      - backend
-
-networks:
-  backend:
-    external: true
-    name: backend

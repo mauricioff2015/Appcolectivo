@@ -2,7 +2,7 @@
 FROM ghcr.io/cirruslabs/flutter:stable as build
 
 # Build-time API base URL (optional)
-ARG API_BASE_URL=http://172.18.0.3:80/api
+ARG API_BASE_URL=http://45.130.104.156:5000/api
 
 # Copiar archivos del proyecto
 WORKDIR /app

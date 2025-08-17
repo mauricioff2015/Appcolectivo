@@ -156,6 +156,6 @@ class AppConfig {
   // Permite configurar la URL del API en tiempo de build con --dart-define=API_BASE_URL=...
   static const String apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://colectivo-api:8080/api',
+    defaultValue: 'http://45.130.104.156:5000/api',
   );
 }

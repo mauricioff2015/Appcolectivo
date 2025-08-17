@@ -1,5 +1,10 @@
 version: '3.8'
 
+# NOTE:
+# This compose builds the image locally and is intended for LOCAL development/build.
+# Do NOT use this file directly in Portainer Stacks. Use docker-compose.portainer.yml instead,
+# which pulls a prebuilt image from a registry.
+
 services:
   colectivo:
     build:

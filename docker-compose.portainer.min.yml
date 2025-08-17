@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   colectivo:
+  # IMPORTANT: Use a prebuilt image built by CI (GHCR). No build section here.
     image: ${IMAGE:-ghcr.io/owner/colectivo-web:latest}
     container_name: colectivo-web
     ports:
@@ -8,7 +9,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - API_BASE_URL=${API_BASE_URL:-http://localhost:7009/api}
+  # API_BASE_URL is baked at build time by CI for Flutter Web.
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080"]
       interval: 30s

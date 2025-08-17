@@ -20,7 +20,7 @@ RUN git config --global --add safe.directory /app
 RUN flutter clean
 RUN flutter pub get
 RUN flutter doctor -v
-RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} -v
+RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} --no-tree-shake-icons -v
 
 # --- Etapa de Producción ---
 # Utiliza una imagen de servidor web ligera para servir el contenido.

@@ -19,6 +19,9 @@ COPY . .
 RUN git config --global --add safe.directory /app
 RUN flutter clean
 RUN flutter pub get
+RUN flutter config --enable-web
+# Generar archivos *.g.dart requeridos por json_serializable y otros generadores
+RUN dart run build_runner build --delete-conflicting-outputs
 RUN flutter doctor -v
 RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} --no-tree-shake-icons -v
 

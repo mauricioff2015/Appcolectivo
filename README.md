@@ -126,12 +126,16 @@ docker build --build-arg API_BASE_URL=http://TU_HOST:7009/api -t colectivo-web .
 
 ### Ejecución con Docker
 ```bash
-docker run -d -p 8080:8080 --name colectivo-web colectivo-web
+# Nginx sirve en 80 dentro del contenedor
+docker run -d -p 8080:80 --name colectivo-web colectivo-web
 ```
 
 ### Usando Docker Compose
 ```bash
-API_BASE_URL=http://TU_HOST:7009/api docker-compose up -d
+# API_BASE_URL debe pasarse en build-time (ARG) para que Flutter lo incruste en el bundle.
+# Si usas docker-compose.yml (que compila la imagen), exporta la variable y ejecuta:
+$env:API_BASE_URL = "http://TU_HOST:7009/api"   # PowerShell
+docker-compose up -d --build
 ```
 
 ### Despliegue en VPS Linux
@@ -179,10 +183,12 @@ services:
       image: ${IMAGE}
       container_name: colectivo-web
       ports:
-         - "8080:8080"
+         - "8080:80"
       restart: unless-stopped
       environment:
          - NODE_ENV=production
+         # Nota: En Flutter Web, API_BASE_URL es de build-time. Asegúrate que la imagen ya se construyó con el valor correcto,
+         # o usa docker-compose.portainer-build.yml para que Portainer construya con ARG API_BASE_URL.
          - API_BASE_URL=${API_BASE_URL}
       healthcheck:
          test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080"]

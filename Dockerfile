@@ -1,6 +1,6 @@
 # Dockerfile para Flutter Web - Colectivo (Versión Robusta)
 # Utiliza una imagen base de Flutter probada y popular.
-FROM bluefireteam/flutter:stable as build
+FROM ghcr.io/cirruslabs/flutter:stable as build
 
 # Argumento para la URL del API, con un valor por defecto seguro.
 ARG API_BASE_URL=http://localhost:5000/api

@@ -40,6 +40,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          platforms: linux/amd64,linux/arm64
           build-args: |
             API_BASE_URL=${{ env.API_BASE_URL }}
           tags: |

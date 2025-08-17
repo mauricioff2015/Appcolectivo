@@ -1,7 +1,6 @@
 version: "3.8"
 services:
   colectivo:
-    # Define IMAGE in the stack env (e.g., ghcr.io/<owner>/colectivo-web:latest)
     image: ${IMAGE:-ghcr.io/owner/colectivo-web:latest}
     container_name: colectivo-web
     ports:
@@ -9,18 +8,10 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      # API_BASE_URL must be reachable by the user's browser
-      - API_BASE_URL=${API_BASE_URL:-http://colectivo-api:8080/api}
+      - API_BASE_URL=${API_BASE_URL:-http://localhost:7009/api}
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 40s
-    networks:
-      - backend
-
-networks:
-  backend:
-    external: true
-    name: backend

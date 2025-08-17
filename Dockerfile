@@ -20,12 +20,11 @@ COPY . .
 # 3. Obtener dependencias.
 # 4. Ejecutar 'flutter doctor' para diagnóstico.
 # 5. Construir la aplicación web con salida detallada.
-RUN |
-  git config --global --add safe.directory /app && \
-  flutter clean && \
-  flutter pub get && \
-  flutter doctor -v && \
-  flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} -v
+RUN git config --global --add safe.directory /app && \
+    flutter clean && \
+    flutter pub get && \
+    flutter doctor -v && \
+    flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} -v
 
 # --- Etapa de Producción ---
 # Utiliza una imagen de servidor web ligera para servir el contenido.

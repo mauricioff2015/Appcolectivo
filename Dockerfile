@@ -11,8 +11,11 @@ RUN flutter pub get
 
 COPY . .
 
-# Construir la aplicación web
-RUN flutter build web --release --dart-define=API_BASE_URL=$API_BASE_URL
+# Diagnosticar el entorno de Flutter
+RUN flutter doctor -v
+
+# Construir la aplicación web con salida detallada
+RUN flutter build web --release --dart-define=API_BASE_URL=$API_BASE_URL -v
 
 # Imagen para servir la aplicación
 FROM node:18-alpine

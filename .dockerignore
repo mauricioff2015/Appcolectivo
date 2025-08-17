@@ -1,0 +1,71 @@
+.git
+.gitignore
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
+android/.gradle/
+android/build/
+ios/Pods/
+ios/build/
+web/.dart_tool/
+**/.DS_Store
+**/Thumbs.db# Flutter y Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+build/
+.pub-cache/
+.pub/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Android
+android/.gradle/
+android/.idea/
+android/local.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# iOS
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Runner/GeneratedPluginRegistrant.*
+
+# Web
+web/
+coverage/
+
+# Windows
+windows/
+# Linux
+linux/
+# macOS
+macos/
+
+# Tests
+test/

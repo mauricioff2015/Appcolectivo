@@ -15,16 +15,12 @@ COPY pubspec.* ./
 COPY . .
 
 # Ejecutar una secuencia de comandos robusta para asegurar un entorno limpio y compilación detallada.
-# 1. Marcar el repositorio como seguro para Git.
-# 2. Limpiar artefactos de compilación anteriores.
-# 3. Obtener dependencias.
-# 4. Ejecutar 'flutter doctor' para diagnóstico.
-# 5. Construir la aplicación web con salida detallada.
-RUN git config --global --add safe.directory /app && \
-    flutter clean && \
-    flutter pub get && \
-    flutter doctor -v && \
-    flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} -v
+# Se separan los comandos para un mejor diagnóstico de errores
+RUN git config --global --add safe.directory /app
+RUN flutter clean
+RUN flutter pub get
+RUN flutter doctor -v
+RUN flutter build web --release --dart-define=API_BASE_URL=${API_BASE_URL} -v
 
 # --- Etapa de Producción ---
 # Utiliza una imagen de servidor web ligera para servir el contenido.

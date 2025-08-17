@@ -1,0 +1,41 @@
+version: '3.8'
+
+# docker-compose.portainer-build.yml
+# ----------------------------------
+# Este archivo está diseñado para ser utilizado con Portainer Stacks cuando se conecta a un repositorio de Git.
+# Portainer construirá la imagen de Docker desde el Dockerfile en el repositorio y luego la desplegará.
+#
+# Instrucciones de uso en Portainer:
+# 1. Ve a "Stacks" y haz clic en "Add stack".
+# 2. Selecciona "Git Repository" como método de construcción.
+# 3. Configura la URL de tu repositorio, la rama y la ruta del archivo compose (`docker-compose.portainer-build.yml`).
+# 4. En la sección "Environment variables", puedes añadir variables como `API_BASE_URL` si necesitas sobreescribir el valor por defecto del Dockerfile.
+# 5. Haz clic en "Deploy the stack".
+
+services:
+  colectivo-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Esta URL se usa en el momento de la construcción.
+        # Puedes sobreescribirla desde las variables de entorno de Portainer Stack.
+        API_BASE_URL: ${API_BASE_URL:-http://api.example.com/api}
+    image: ghcr.io/mauricioff2015/colectivo-web:latest-build
+    container_name: colectivo-web
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - backend
+
+networks:
+  backend:
+    external: true
+    name: backend

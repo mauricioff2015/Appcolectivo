@@ -32,6 +32,9 @@ FROM nginx:stable-alpine
 # Copiar los archivos de la aplicación web construidos desde la etapa de 'build'.
 COPY --from=build /app/build/web /usr/share/nginx/html
 
+# Copiar configuración de Nginx para SPA (fallback a index.html)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Exponer el puerto 80 (puerto por defecto de Nginx).
 EXPOSE 80
 

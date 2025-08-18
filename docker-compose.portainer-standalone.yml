@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  colectivo-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        API_BASE_URL: ${API_BASE_URL:-http://45.130.104.156:5000/api}
+    image: ghcr.io/mauricioff2015/colectivo-web:latest
+    container_name: colectivo-web
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

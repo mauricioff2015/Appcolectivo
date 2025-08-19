@@ -64,9 +64,8 @@ class ColectivoApp extends ConsumerWidget {
       ],
       locale: const Locale('es', 'ES'),
       theme: ThemeData(
-        primarySwatch: Colors.blue,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
+          seedColor: const Color(0xFFE30613), // Rojo LIBRE
           brightness: Brightness.light,
         ),
         useMaterial3: true,
@@ -80,9 +79,9 @@ class ColectivoApp extends ConsumerWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        inputDecorationTheme: InputDecorationTheme(
-          border: const OutlineInputBorder(),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        inputDecorationTheme: const InputDecorationTheme(
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(

@@ -31,7 +31,12 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
+# Ignore all build artifacts by default
 /build/
+
+# Allow committing the web build output only
+!/build/web/
+!/build/web/**
 
 # Symbolication related
 app.*.symbols

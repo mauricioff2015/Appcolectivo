@@ -199,184 +199,340 @@ class _MiembroFormState extends ConsumerState<MiembroForm> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final bool isMobile = width < 600;
+    const double gap = 16.0;
+
     return Form(
       key: _formKey,
       child: Column(
         children: [
           // Información básica
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: _nombreController,
-                  decoration: const InputDecoration(
-                    labelText: 'Nombre Completo *',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Ingrese el nombre';
-                    }
-                    return null;
-                  },
-                  textCapitalization: TextCapitalization.words,
-                ),
+          if (isMobile) ...[
+            TextFormField(
+              controller: _nombreController,
+              decoration: const InputDecoration(
+                labelText: 'Nombre Completo *',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: TextFormField(
-                  controller: _dniController,
-                  decoration: const InputDecoration(
-                    labelText: 'DNI *',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(13),
-                  ],
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Ingrese el DNI';
-                    }
-                    if (value.length != 13) {
-                      return 'El DNI debe tener 13 dígitos';
-                    }
-                    return null;
-                  },
-                ),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Ingrese el nombre';
+                }
+                return null;
+              },
+              textCapitalization: TextCapitalization.words,
+            ),
+            const SizedBox(height: gap),
+            TextFormField(
+              controller: _dniController,
+              decoration: const InputDecoration(
+                labelText: 'DNI *',
+                border: OutlineInputBorder(),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(13),
+              ],
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Ingrese el DNI';
+                }
+                if (value.length != 13) {
+                  return 'El DNI debe tener 13 dígitos';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: gap),
+          ] else ...[
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _nombreController,
+                    decoration: const InputDecoration(
+                      labelText: 'Nombre Completo *',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Ingrese el nombre';
+                      }
+                      return null;
+                    },
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                ),
+                const SizedBox(width: gap),
+                Expanded(
+                  child: TextFormField(
+                    controller: _dniController,
+                    decoration: const InputDecoration(
+                      labelText: 'DNI *',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(13),
+                    ],
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Ingrese el DNI';
+                      }
+                      if (value.length != 13) {
+                        return 'El DNI debe tener 13 dígitos';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: gap),
+          ],
 
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: _fechaNacimientoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Fecha de Nacimiento *',
-                    border: OutlineInputBorder(),
-                    suffixIcon: Icon(Icons.calendar_today),
-                  ),
-                  readOnly: true,
-                  onTap: _selectDate,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Seleccione la fecha de nacimiento';
-                    }
-                    return null;
-                  },
-                ),
+          if (isMobile) ...[
+            TextFormField(
+              controller: _fechaNacimientoController,
+              decoration: const InputDecoration(
+                labelText: 'Fecha de Nacimiento *',
+                border: OutlineInputBorder(),
+                suffixIcon: Icon(Icons.calendar_today),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  value: _genero,
-                  decoration: const InputDecoration(
-                    labelText: 'Género *',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: const [
-                    DropdownMenuItem(value: 'Masculino', child: Text('Masculino')),
-                    DropdownMenuItem(value: 'Femenino', child: Text('Femenino')),
-                    DropdownMenuItem(value: 'Otro', child: Text('Otro')),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _genero = value!;
-                    });
-                  },
-                ),
+              readOnly: true,
+              onTap: _selectDate,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Seleccione la fecha de nacimiento';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: gap),
+            DropdownButtonFormField<String>(
+              value: _genero,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                labelText: 'Género *',
+                border: OutlineInputBorder(),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
+              items: const [
+                DropdownMenuItem(value: 'Masculino', child: Text('Masculino')),
+                DropdownMenuItem(value: 'Femenino', child: Text('Femenino')),
+                DropdownMenuItem(value: 'Otro', child: Text('Otro')),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  _genero = value!;
+                });
+              },
+            ),
+            const SizedBox(height: gap),
+          ] else ...[
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _fechaNacimientoController,
+                    decoration: const InputDecoration(
+                      labelText: 'Fecha de Nacimiento *',
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    readOnly: true,
+                    onTap: _selectDate,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Seleccione la fecha de nacimiento';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(width: gap),
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _genero,
+                    isExpanded: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Género *',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'Masculino', child: Text('Masculino')),
+                      DropdownMenuItem(value: 'Femenino', child: Text('Femenino')),
+                      DropdownMenuItem(value: 'Otro', child: Text('Otro')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _genero = value!;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: gap),
+          ],
 
           // Contacto
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: _telefonoController,
-                  decoration: const InputDecoration(
-                    labelText: 'Teléfono *',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Ingrese el teléfono';
-                    }
-                    return null;
-                  },
-                ),
+          if (isMobile) ...[
+            TextFormField(
+              controller: _telefonoController,
+              decoration: const InputDecoration(
+                labelText: 'Teléfono *',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: TextFormField(
-                  controller: _direccionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Dirección *',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Ingrese la dirección';
-                    }
-                    return null;
-                  },
-                  textCapitalization: TextCapitalization.words,
-                ),
+              keyboardType: TextInputType.phone,
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Ingrese el teléfono';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: gap),
+            TextFormField(
+              controller: _direccionController,
+              decoration: const InputDecoration(
+                labelText: 'Dirección *',
+                border: OutlineInputBorder(),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Ingrese la dirección';
+                }
+                return null;
+              },
+              textCapitalization: TextCapitalization.words,
+            ),
+            const SizedBox(height: gap),
+          ] else ...[
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _telefonoController,
+                    decoration: const InputDecoration(
+                      labelText: 'Teléfono *',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Ingrese el teléfono';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(width: gap),
+                Expanded(
+                  child: TextFormField(
+                    controller: _direccionController,
+                    decoration: const InputDecoration(
+                      labelText: 'Dirección *',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Ingrese la dirección';
+                      }
+                      return null;
+                    },
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: gap),
+          ],
 
           // Información organizacional
-          Row(
-            children: [
-              Expanded(
-                child: DropdownButtonFormField<String>(
-                  value: _rol,
-                  decoration: const InputDecoration(
-                    labelText: 'Rol *',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: const [
-                    DropdownMenuItem(value: 'Miembro', child: Text('Miembro')),
-                    DropdownMenuItem(value: 'Delegado', child: Text('Delegado')),
-                    DropdownMenuItem(value: 'Coordinador', child: Text('Coordinador')),
-                    DropdownMenuItem(value: 'Dirigente', child: Text('Dirigente')),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _rol = value!;
-                    });
-                  },
-                ),
+          if (isMobile) ...[
+            DropdownButtonFormField<String>(
+              value: _rol,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                labelText: 'Rol *',
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: TextFormField(
-                  controller: _sectorController,
-                  decoration: const InputDecoration(
-                    labelText: 'Sector *',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Ingrese el sector';
-                    }
-                    return null;
-                  },
-                  textCapitalization: TextCapitalization.words,
-                ),
+              items: const [
+                DropdownMenuItem(value: 'Miembro', child: Text('Miembro')),
+                DropdownMenuItem(value: 'Delegado', child: Text('Delegado')),
+                DropdownMenuItem(value: 'Coordinador', child: Text('Coordinador')),
+                DropdownMenuItem(value: 'Dirigente', child: Text('Dirigente')),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  _rol = value!;
+                });
+              },
+            ),
+            const SizedBox(height: gap),
+            TextFormField(
+              controller: _sectorController,
+              decoration: const InputDecoration(
+                labelText: 'Sector *',
+                border: OutlineInputBorder(),
               ),
-            ],
-          ),
-          const SizedBox(height: 16),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Ingrese el sector';
+                }
+                return null;
+              },
+              textCapitalization: TextCapitalization.words,
+            ),
+            const SizedBox(height: gap),
+          ] else ...[
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    value: _rol,
+                    isExpanded: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Rol *',
+                      border: OutlineInputBorder(),
+                    ),
+                    items: const [
+                      DropdownMenuItem(value: 'Miembro', child: Text('Miembro')),
+                      DropdownMenuItem(value: 'Delegado', child: Text('Delegado')),
+                      DropdownMenuItem(value: 'Coordinador', child: Text('Coordinador')),
+                      DropdownMenuItem(value: 'Dirigente', child: Text('Dirigente')),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _rol = value!;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(width: gap),
+                Expanded(
+                  child: TextFormField(
+                    controller: _sectorController,
+                    decoration: const InputDecoration(
+                      labelText: 'Sector *',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Ingrese el sector';
+                      }
+                      return null;
+                    },
+                    textCapitalization: TextCapitalization.words,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: gap),
+          ],
 
           TextFormField(
             controller: _profesionOficioController,
@@ -449,32 +605,52 @@ class _MiembroFormState extends ConsumerState<MiembroForm> {
           const SizedBox(height: 24),
 
           // Botones
-          Row(
-            children: [
-              if (widget.miembroToEdit == null) ...[
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: _isLoading ? null : _clearForm,
-                    child: const Text('Limpiar'),
-                  ),
-                ),
-                const SizedBox(width: 16),
-              ],
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _saveMiembro,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : Text(widget.miembroToEdit != null ? 'Actualizar' : 'Registrar'),
-                ),
+          if (isMobile) ...[
+            if (widget.miembroToEdit == null)
+              OutlinedButton(
+                onPressed: _isLoading ? null : _clearForm,
+                child: const Text('Limpiar'),
               ),
-            ],
-          ),
+            const SizedBox(height: gap),
+            ElevatedButton(
+              onPressed: _isLoading ? null : _saveMiembro,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              child: _isLoading
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : Text(widget.miembroToEdit != null ? 'Actualizar' : 'Registrar'),
+            ),
+          ] else ...[
+            Row(
+              children: [
+                if (widget.miembroToEdit == null) ...[
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: _isLoading ? null : _clearForm,
+                      child: const Text('Limpiar'),
+                    ),
+                  ),
+                  const SizedBox(width: gap),
+                ],
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: _isLoading ? null : _saveMiembro,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                    ),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(widget.miembroToEdit != null ? 'Actualizar' : 'Registrar'),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ],
       ),
     );

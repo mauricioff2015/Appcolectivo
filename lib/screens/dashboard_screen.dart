@@ -26,8 +26,8 @@ class DashboardScreen extends ConsumerWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Dashboard - ${usuario.territorio}'),
-          backgroundColor: Colors.blue,
+          title: Text('Territorio - ${usuario.territorio}'),
+          backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,
           actions: [
             if (usuario.rol == 'admin')
@@ -73,10 +73,10 @@ class DashboardScreen extends ConsumerWidget {
                         children: [
                           Row(
                             children: [
-                              const Icon(Icons.person_add, color: Colors.blue),
+                              Icon(Icons.person_add, color: Theme.of(context).colorScheme.primary),
                               const SizedBox(width: 8),
                               const Text(
-                                'Registrar Nuevo Miembro',
+                                'Registrar Nuevo ',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,

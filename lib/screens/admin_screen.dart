@@ -116,7 +116,7 @@ class _AdminScreenState extends ConsumerState<AdminScreen> {
                           return ListTile(
                             leading: CircleAvatar(
                               backgroundColor: user.rol == 'admin' 
-                                  ? Colors.red : Colors.blue,
+                                  ? Colors.red : Theme.of(context).colorScheme.primary,
                               child: Icon(
                                 user.rol == 'admin' 
                                     ? Icons.admin_panel_settings 
@@ -142,7 +142,7 @@ class _AdminScreenState extends ConsumerState<AdminScreen> {
                                   value: 'edit',
                                   child: Row(
                                     children: [
-                                      Icon(Icons.edit, color: Colors.blue),
+                                      Icon(Icons.edit, color: Colors.red),
                                       SizedBox(width: 8),
                                       Text('Editar'),
                                     ],
